@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import SearchBar from "./components/SearchBar";
 
 class App extends Component {
@@ -13,17 +13,19 @@ class App extends Component {
     this.getzip = this.getzip.bind(this);
     this.getWeatherAndRestaurants = this.getWeatherAndRestaurants.bind(this);
   }
-  getzip(zip){
-    this.setState({zipcode:zip})
+  getzip(zip) {
+    this.setState({ zipcode: zip });
   }
-  getWeatherAndRestaurants(zipcode){
-
+  getWeatherAndRestaurants(zipcode) {
+    console.log(zipcode);
   }
   render() {
     return (
       <div className="App">
-        <SearchBar onSearchTermChange={this.getzip} onSubmit={this.getWeatherAndRestaurants} />
-        
+        <SearchBar
+          onSearchTermChange={this.getzip}
+          onSubmit={this.getWeatherAndRestaurants}
+        />
       </div>
     );
   }

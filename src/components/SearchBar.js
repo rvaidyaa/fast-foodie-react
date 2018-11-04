@@ -9,15 +9,17 @@ export default class SearchBar extends Component {
       zipcode: null
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
     this.setState({ zipcode: event.target.value });
-    this.props.onSearchTermChange(this.state.zipcode);
   }
-  // handleSubmit(event){
-  //   this.props.
-  // }
+  handleSubmit = (e) =>{
+    e.preventDefault();
+    this.props.onSearchTermChange(this.state.zipcode);
+    this.props.onSubmit(this.state.zipcode);
+    // e.preventDefault();
+  };
 
   render() {
     return (
@@ -29,7 +31,7 @@ export default class SearchBar extends Component {
               Input your Zip Code in order to get the 9 top restaurants in your
               area and weather to plan a quick meal out!
             </h2>
-            <form id="form">
+            <form id="form" onSubmit={this.handleSubmit}>
               <input
                 placeholder="ZipCode"
                 className="user-input"
@@ -37,7 +39,7 @@ export default class SearchBar extends Component {
                 onChange={this.handleChange}
               />
               <br />
-              
+
               <input className="search-button" type="submit" value="Search" />
             </form>
           </section>
