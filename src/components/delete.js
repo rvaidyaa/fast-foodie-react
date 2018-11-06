@@ -26,12 +26,13 @@ $(document).ready(function () {
     }
 
     function populateWeather(data) {
-        var temp_f = data.current_observation.temp_f;
+        let temp_f = data.current_observation.temp_f;
+        let conditions = data.current_observation.weather;
         var latValue = Math.round(data.current_observation.display_location.latitude * 100) / 100;
         var longValue = Math.round(data.current_observation.display_location.longitude * 100) / 100;
         var skies = data.current_observation.weather;
         var icon = data.current_observation.icon_url;
-        var conditions = data.current_observation.weather;
+        
         var url = data.current_observation.forecast_url;
         var coools = `${temp_f} degrees F and ${conditions} `
         coools += "<a href=" + url + " target='_blank'>Forecast Information</a>"
@@ -104,3 +105,34 @@ $(document).ready(function () {
 
 
 
+import React from 'react';
+import VideoListItem from './video_list_item';
+import './video_list.css'
+// export const Component = (props) => {
+//     return(
+//         <div>
+//             {props.children}
+//         </div>
+//     )
+// }
+
+// export default Component
+
+const VideoList = (props) => {
+    const videoItems = props.videos.map((video) => {
+        return (
+         <VideoListItem
+         onVideoSelect={props.onVideoSelect}
+         key={video.etag}
+          video={video} />
+        );
+    });
+
+    return (
+        <ul className="col-md-4 list-group">
+            {videoItems}
+        </ul>
+    );
+};
+
+// export default VideoList;

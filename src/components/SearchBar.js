@@ -6,7 +6,7 @@ export default class SearchBar extends Component {
     super(props);
 
     this.state = {
-      zipcode: null
+      zipcode: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
