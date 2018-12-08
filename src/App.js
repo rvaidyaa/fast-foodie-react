@@ -18,7 +18,7 @@ class App extends Component {
     this.setState({ zipcode: zip });
   }
   async getWeatherAndRestaurants(zipcode) {
-    if (zipcode == '' || zipcode == [] || zipcode.length <5){
+    if (zipcode == '' || zipcode == [] || zipcode.length <5 || zipcode.length >6){
       return alert('Invalid zip, must be 6 numbers long');
     };
     let searchZip = `https://api.wunderground.com/api/9d4257c7e0413f4b/conditions/q/  ${zipcode}  .json`;

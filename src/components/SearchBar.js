@@ -52,3 +52,4 @@ export default class SearchBar extends Component {
     );
   }
 }
+https://stackoverflow.com/questions/35905988/react-js-how-to-append-a-component-on-click
