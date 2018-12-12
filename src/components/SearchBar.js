@@ -46,10 +46,11 @@ export default class SearchBar extends Component {
           <div className="weather-results">
             <ul />
           </div>
-          <section role="wrapper" className="results-wrapper" />
+          <section className="results-wrapper" />
         </main>
       </div>
     );
   }
 }
-https://stackoverflow.com/questions/35905988/react-js-how-to-append-a-component-on-click
+
+//https://stackoverflow.com/questions/35905988/react-js-how-to-append-a-component-on-click

@@ -18,6 +18,7 @@ class App extends Component {
     this.setState({ zipcode: zip });
   }
   async getWeatherAndRestaurants(zipcode) {
+    // eslint-disable-next-line
     if (zipcode == '' || zipcode == [] || zipcode.length <5 || zipcode.length >6){
       return alert('Invalid zip, must be 6 numbers long');
     };
