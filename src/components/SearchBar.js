@@ -6,17 +6,16 @@ export default class SearchBar extends Component {
     super(props);
 
     this.state = {
-      zipcode: ''
+      zipcode: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(event) {
+  handleChange(event) { //on zip code change , update the state to the inputs value
     this.setState({ zipcode: event.target.value });
   }
-  handleSubmit = (e) =>{
+  handleSubmit = e => { 
     e.preventDefault();
-    this.props.onSearchTermChange(this.state.zipcode);
     this.props.onSubmit(this.state.zipcode);
     // e.preventDefault();
   };
@@ -33,13 +32,12 @@ export default class SearchBar extends Component {
             </h2>
             <form id="form" onSubmit={this.handleSubmit}>
               <input
-                placeholder="ZipCode"
+                placeholder="85281"
                 className="user-input"
                 value={this.state.zipcode}
                 onChange={this.handleChange}
               />
               <br />
-
               <input className="search-button" type="submit" value="Search" />
             </form>
           </section>

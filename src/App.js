@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 import axios from "axios";
+// import Forecast from "./components/forecast";
 
 class App extends Component {
   constructor(props) {
@@ -9,22 +10,34 @@ class App extends Component {
 
     this.state = {
       restaurants: [],
-      zipcode: null
+      zipcode: null,
+      temperature: '',
+      conditions: '',
     };
-    this.getzip = this.getzip.bind(this);
+
     this.getWeatherAndRestaurants = this.getWeatherAndRestaurants.bind(this);
   }
-  getzip(zip) {
-    this.setState({ zipcode: zip });
+  populateForecast(){
+
   }
   async getWeatherAndRestaurants(zipcode) {
-    // eslint-disable-next-line
-    if (zipcode == '' || zipcode == [] || zipcode.length <5 || zipcode.length >6){
-      return alert('Invalid zip, must be 6 numbers long');
-    };
+    //input vaidation (look up regex)
+    if (
+      zipcode === "" ||
+      zipcode === [] ||
+      zipcode.length < 5 ||
+      zipcode.length > 6
+    ) {
+      return alert("Invalid zip, must be 6 numbers long");
+    }
+    //setting up the api call for wunderground for weather and coords
     let searchZip = `https://api.wunderground.com/api/9d4257c7e0413f4b/conditions/q/  ${zipcode}  .json`;
+    console.log('zip code is:',zipcode)
     let weather = await axios.get(searchZip);
-    let latValue =
+
+    //setting up the api call for zomato
+    // rounding both values in order to use them
+    let latValue = 
       Math.round(
         weather.data.current_observation.display_location.latitude * 100
       ) / 100;
@@ -33,15 +46,18 @@ class App extends Component {
         weather.data.current_observation.display_location.longitude * 100
       ) / 100;
     console.log(weather, latValue, longValue);
-    let searchCoords =
-      "https://developers.zomato.com/api/v2.1/geocode?lat=" +
-      latValue +
-      "&lon=" +
-      longValue;
+    let searchCoords = `https://developers.zomato.com/api/v2.1/geocode?lat= ${latValue} &lon= ${longValue}`;
     let restaurants = await axios.get(searchCoords, {
       headers: { "user-key": "2feb645051247922577a0d2f4a387122" }
     });
-    console.log(restaurants);
+    //set state with 
+    this.setState({
+      temperature: weather.data.current_observation.temp_f,
+      conditions: weather.data.current_observation.weather
+    })
+    console.log('temperature is :', weather.data.current_observation.temp_f)
+    console.log('conditions are :',weather.data.current_observation.weather)
+    console.log('restaurants object is: ',restaurants);
   }
   render() {
     return (
