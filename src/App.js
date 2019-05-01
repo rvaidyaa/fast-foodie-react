@@ -11,15 +11,13 @@ class App extends Component {
     this.state = {
       restaurants: [],
       zipcode: null,
-      temperature: '',
-      conditions: '',
+      temperature: "",
+      conditions: ""
     };
 
     this.getWeatherAndRestaurants = this.getWeatherAndRestaurants.bind(this);
   }
-  populateForecast(){
-
-  }
+  populateForecast() {}
   async getWeatherAndRestaurants(zipcode) {
     //input vaidation (look up regex)
     if (
@@ -32,12 +30,12 @@ class App extends Component {
     }
     //setting up the api call for wunderground for weather and coords
     let searchZip = `https://api.wunderground.com/api/9d4257c7e0413f4b/conditions/q/  ${zipcode}  .json`;
-    console.log('zip code is:',zipcode)
+    console.log("zip code is:", zipcode);
     let weather = await axios.get(searchZip);
 
     //setting up the api call for zomato
     // rounding both values in order to use them
-    let latValue = 
+    let latValue =
       Math.round(
         weather.data.current_observation.display_location.latitude * 100
       ) / 100;
@@ -50,14 +48,14 @@ class App extends Component {
     let restaurants = await axios.get(searchCoords, {
       headers: { "user-key": "2feb645051247922577a0d2f4a387122" }
     });
-    //set state with 
+    //set state with
     this.setState({
       temperature: weather.data.current_observation.temp_f,
       conditions: weather.data.current_observation.weather
-    })
-    console.log('temperature is :', weather.data.current_observation.temp_f)
-    console.log('conditions are :',weather.data.current_observation.weather)
-    console.log('restaurants object is: ',restaurants);
+    });
+    console.log("temperature is :", weather.data.current_observation.temp_f);
+    console.log("conditions are :", weather.data.current_observation.weather);
+    console.log("restaurants object is: ", restaurants);
   }
   render() {
     return (
@@ -66,6 +64,29 @@ class App extends Component {
           onSearchTermChange={this.getzip}
           onSubmit={this.getWeatherAndRestaurants}
         />
+        <div>
+          <form name="contact" method="post">
+            <input type="hidden" name="form-name" value="contact" />
+            <p>
+              <label>
+                Your Name: <input type="text" name="name" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Your Email: <input type="email" name="email" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Message: <textarea name="message" />
+              </label>
+            </p>
+            <p>
+              <button type="submit">Send</button>
+            </p>
+          </form>
+        </div>
       </div>
     );
   }
