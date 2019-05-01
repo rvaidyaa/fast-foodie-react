@@ -94,9 +94,7 @@ class App extends Component {
           <p>
             <label>Your Email: <input type="email" name="email"/></label>
           </p>
-          <p>
-            <label>Messasge: <textarea name="message"></textarea></label>
-          </p>
+          
           <p>
             <button type="submit">Send</button>
           </p>
