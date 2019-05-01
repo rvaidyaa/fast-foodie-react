@@ -4,19 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(
-  <div>
-    <div>
-      <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <textarea name="message" />
-      </form>
-    </div>
-    <App />
-  </div>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

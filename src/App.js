@@ -3,7 +3,11 @@ import "./App.css";
 import SearchBar from "./components/SearchBar";
 import axios from "axios";
 // import Forecast from "./components/forecast";
-
+const encode = (data) => {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+}
 class App extends Component {
   constructor(props) {
     super(props);
@@ -12,11 +16,27 @@ class App extends Component {
       restaurants: [],
       zipcode: null,
       temperature: "",
-      conditions: ""
+      conditions: "",
+      name: "",
+      email: "",
+      message: ""
     };
 
     this.getWeatherAndRestaurants = this.getWeatherAndRestaurants.bind(this);
   }
+  handleSubmit = e => {
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...this.state })
+    })
+      .then(() => alert("Success!"))
+      .catch(error => alert(error));
+
+    e.preventDefault();
+  };
+
+  handleChange = e => this.setState({ [e.target.name]: e.target.value });
   populateForecast() {}
   async getWeatherAndRestaurants(zipcode) {
     //input vaidation (look up regex)
@@ -58,35 +78,34 @@ class App extends Component {
     console.log("restaurants object is: ", restaurants);
   }
   render() {
+    const { name, email, message } = this.state;
     return (
       <div className="App">
         <SearchBar
           onSearchTermChange={this.getzip}
           onSubmit={this.getWeatherAndRestaurants}
         />
-        <div>
-          <form name="contact" method="post">
-            <input type="hidden" name="form-name" value="contact" />
-            <p>
-              <label>
-                Your Name: <input type="text" name="name" />
-              </label>
-            </p>
-            <p>
-              <label>
-                Your Email: <input type="email" name="email" />
-              </label>
-            </p>
-            <p>
-              <label>
-                Message: <textarea name="message" />
-              </label>
-            </p>
-            <p>
-              <button type="submit">Send</button>
-            </p>
-          </form>
-        </div>
+        <div />
+        <form onSubmit={this.handleSubmit}>
+          <p>
+            <label>
+              Your Name: <input type="text" name="name" value={name} onChange={this.handleChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              Your Email: <input type="email" name="email" value={email} onChange={this.handleChange} />
+            </label>
+          </p>
+          <p>
+            <label>
+              Message: <textarea name="message" value={message} onChange={this.handleChange} />
+            </label>
+          </p>
+          <p>
+            <button type="submit">Send</button>
+          </p>
+        </form>
       </div>
     );
   }
